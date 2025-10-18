@@ -43,7 +43,7 @@
         "migrate": [
             "redis-cli FLUSHALL",
             "@php artisan optimize:clear --ansi",
-            "@php artisan migrate --seed --force"
+            "@php artisan migrate --force"
         ],
         "phpstan": [
             "./vendor/bin/pint",
