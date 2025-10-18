@@ -1,0 +1,84 @@
+{
+    "name": "mkamelmasoud/composer.local",
+    "description": "Custom dev scripts for my Laravel project",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "mkamelmasoud/starter-core-kit": "@dev"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../starter-core-kit"
+        }
+    ],
+    "scripts": {
+        "setup-frontend-local": [
+            "clear",
+            "rm -rfv node_modules/ package-lock.lock",
+            "npm install",
+            "npm run build"
+        ],
+        "setup-backend-local": [
+            "rm -rfv vendor/ composer.lock",
+            "php -r \"echo '\\033[32m>>> Using COMPOSER='.(getenv('COMPOSER') ?: 'composer.json').'\\033[0m'.PHP_EOL;\"",
+            "php -r \"putenv('COMPOSER=composer.json'); passthru('composer install');\"",
+            "@optimize",
+            "@migrate",
+            "@ide-helper",
+            "@phpstan"
+        ],
+        "dump":[
+            "composer dump-autoload --optimize --classmap-authoritative"
+        ],
+        "optimize": [
+            "@php artisan optimize:clear --ansi"
+        ],
+        "wipe-db": [
+            "redis-cli FLUSHALL",
+            "@php artisan optimize:clear --ansi",
+            "@php artisan db:wipe",
+            "@php artisan migrate --seed --force"
+        ],
+        "migrate": [
+            "redis-cli FLUSHALL",
+            "@php artisan optimize:clear --ansi",
+            "@php artisan migrate --seed --force"
+        ],
+        "phpstan": [
+            "./vendor/bin/pint",
+            "./vendor/bin/phpstan"
+        ],
+        "phpstan-analyse": [
+            "./vendor/bin/pint --test",
+            "./vendor/bin/phpstan analyse -c phpstan.neon.dist"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:models"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true,
+            "wikimedia/composer-merge-plugin": true
+        }
+    }
+}

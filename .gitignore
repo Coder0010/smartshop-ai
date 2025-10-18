@@ -23,6 +23,9 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /error_log
+# composer.*.json
+composer.lock
+composer.*.lock
 .htaccess
 error_log
 public/error_log
