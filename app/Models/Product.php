@@ -22,7 +22,7 @@ class Product extends BaseEntity
     {
         parent::booted();
         static::creating(function ($model) {
-            if (empty($model->slug)) {
+            if ($model->slug === null || $model->slug === '') {
                 $model->slug = Str::slug($model->name) . '-' . Str::random(4);
             }
         });

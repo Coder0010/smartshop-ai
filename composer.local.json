@@ -47,6 +47,7 @@
         ],
         "phpstan": [
             "./vendor/bin/pint",
+            "./vendor/bin/phpstan clear-result-cache",
             "./vendor/bin/phpstan"
         ],
         "phpstan-analyse": [

@@ -6,17 +6,17 @@ use App\Http\DataToObjects\ProductDto;
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryContract;
 use App\Repositories\Eloquents\ProductRepositoryEloquent;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use MkamelMasoud\StarterCoreKit\Core\BaseDto;
 use MkamelMasoud\StarterCoreKit\Core\BaseService;
 
 /**
  * @extends BaseService<
- *        ProductRepositoryContract,
- *        ProductDto
- *   >
+ *     ProductRepositoryContract,
+ *     ProductDto
+ * >
  *
  * @property ProductRepositoryEloquent $repository
  */
@@ -49,8 +49,8 @@ class ProductService extends BaseService
     protected function beforeDelete(Model $model): void
     {
         /** @var Product $model */
-        if ($model->file !== null && Storage::disk('public')->exists($model->file)) {
-            Storage::disk('public')->delete($model->file);
+        if ($model->image !== null && Storage::disk('public')->exists($model->image)) {
+            Storage::disk('public')->delete($model->image);
         }
     }
 
@@ -59,17 +59,33 @@ class ProductService extends BaseService
         return $this->findOrFail($id);
     }
 
-    public function search(string $q, int $limit = 24): Collection
+    /**
+     * Search products by keyword.
+     *
+     * @return EloquentCollection<int, Product>
+     */
+    public function search(string $q, int $limit = 24): EloquentCollection
     {
         return $this->repository->search($q, $limit);
     }
 
-    public function random(int $count = 3): Collection
+    /**
+     * Get random products.
+     *
+     * @return EloquentCollection<int, Product>
+     */
+    public function random(int $count = 3): EloquentCollection
     {
         return $this->repository->allRandom($count);
     }
 
-    public function findMany(array $ids): Collection
+    /**
+     * Find multiple products by their IDs.
+     *
+     * @param  array<int>  $ids
+     * @return EloquentCollection<int, Product>
+     */
+    public function findMany(array $ids): EloquentCollection
     {
         return $this->repository->findMany($ids);
     }
