@@ -19,7 +19,7 @@ class AdminProductController extends Controller
     public function index(Request $request): View
     {
         $perPage = $request->input('per_page', $this->service->getPerPage());
-        $data    = $this->service->getFromCache()->paginateOnCollection($perPage);
+        $data    = $this->service->allFromCache()->paginateOnCollection($perPage);
 
         return view('admin.products.index', compact('data'));
     }

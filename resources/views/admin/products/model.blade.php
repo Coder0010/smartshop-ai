@@ -52,9 +52,9 @@
 
             <!-- File -->
             <div class="mb-4">
-                <x-input-label for="file" :value="__('Image')" />
-                <x-text-input id="file" name="file" type="file" class="mt-1 block w-full" />
-                <x-input-error :messages="$errors->get('file')" class="mt-2" />
+                <x-input-label for="image" :value="__('Image')" />
+                <x-text-input id="image" name="image" type="file" class="mt-1 block w-full" />
+                <x-input-error :messages="$errors->get('image')" class="mt-2" />
             </div>
 
             <!-- Buttons -->

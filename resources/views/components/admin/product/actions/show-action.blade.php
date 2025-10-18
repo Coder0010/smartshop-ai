@@ -17,12 +17,8 @@
         <div class="p-4 mb-4 border border-gray-200 dark:border-gray-700 rounded-lg flex justify-between">
             <span class="block font-semibold w-32">{{ is_string($column) ? ucfirst($column) : $column }}:</span>
             <span class="block  text-gray-700 dark:text-gray-300">
-                @if($column == 'file')
-                    @isset($row->file)
-                        <img src="{{ asset('storage/' . $row->file) }}" class="w-16 h-16 rounded" alt="Image">
-                    @endisset
-                @elseif($column == 'type')
-                    {{ $row->type->label() }}
+                @if($column == 'image')
+                    <img src="{{ $row->image }}" class="w-16 h-16 rounded" alt="Image">
                 @else
                     {{ $row->$column }}
                 @endif

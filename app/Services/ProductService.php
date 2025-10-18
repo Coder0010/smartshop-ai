@@ -49,14 +49,16 @@ class ProductService extends BaseService
     protected function beforeDelete(Model $model): void
     {
         /** @var Product $model */
-        if ($model->image !== null && Storage::disk('public')->exists($model->image)) {
-            Storage::disk('public')->delete($model->image);
+        $path = $model->getRawOriginal('image');
+
+        if (is_string($path) && $path !== '' && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
         }
     }
 
     public function getById(int $id): Model
     {
-        return $this->findOrFail($id);
+        return $this->repository->find($id);
     }
 
     /**

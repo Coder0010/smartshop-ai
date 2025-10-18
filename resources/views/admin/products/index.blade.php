@@ -27,9 +27,9 @@
                     <div class="inline-block min-w-full align-middle w-full">
                         <div class="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm text-gray-900 dark:text-gray-100">
                             <x-table :tableColumns="['name', 'description', 'price',]"
-                                     :showModelColumns="['name', 'description', 'price', 'file']"
+                                     :showModelColumns="['name', 'description', 'price', 'image']"
                                      :data="$data"
-                                     destroyRouteName="products.destroy"
+                                     destroyRouteName="admin.products.destroy"
                                      :actions="['edit', 'show', 'delete']"
                             ></x-table>
                         </div>

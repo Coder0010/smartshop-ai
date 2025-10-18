@@ -30,11 +30,7 @@
                 {{-- Dynamic Columns --}}
                 @foreach ($tableColumns as $column)
                     <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 max-w-xs truncate">
-                        @if($column == 'type')
-                            {{ $row->type->label() }}
-                        @else
-                            {{ $row->$column }}
-                        @endif
+                        {{ $row->$column }}
                     </td>
                 @endforeach
                 {{-- Conditional Actions --}}

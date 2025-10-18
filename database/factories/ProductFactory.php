@@ -24,7 +24,8 @@ class ProductFactory extends Factory
             'slug'        => Str::slug($name) . '-' . $this->faker->unique()->lexify('??'),
             'description' => $this->faker->paragraphs(2, true),
             'price'       => $this->faker->randomFloat(2, 5, 499),
-            'image'       => fake()->imageUrl(),
+            'image'       => 'https://picsum.photos/seed/' . Str::slug($name) . '/600/400',
+
         ];
     }
 }
