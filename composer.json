@@ -9,7 +9,7 @@
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "mkamelmasoud/starter-core-kit": "^1.0",
+        "mkamelmasoud/starter-core-kit": "^1.1.0",
         "predis/predis": "^3.0"
     },
     "require-dev": {

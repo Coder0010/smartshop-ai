@@ -38,8 +38,9 @@ class AiClientService
 
             if ($response->successful()) {
                 Log::info('AI recommendation response', [
-                    $response->json()
+                    $response->json(),
                 ]);
+
                 return $response->json('choices.0.message.content');
             }
             Log::error('AI API failed', [

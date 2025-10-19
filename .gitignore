@@ -26,6 +26,7 @@ Thumbs.db
 # composer.*.json
 composer.lock
 composer.*.lock
+package-lock.json
 .htaccess
 error_log
 public/error_log

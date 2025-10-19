@@ -3,29 +3,28 @@
     "description": "Custom dev scripts for my Laravel project",
     "license": "MIT",
     "type": "project",
-    "require": {
-        "mkamelmasoud/starter-core-kit": "@dev"
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../starter-core-kit"
-        }
-    ],
     "scripts": {
+        "setup-local-env": [
+            "@setup-frontend-local",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@setup-backend-local",
+            "@php artisan key:generate --ansi",
+            "@wipe-db",
+            "@ide-helper",
+            "@optimize"
+        ],
         "setup-frontend-local": [
-            "clear",
-            "rm -rfv node_modules/ package-lock.lock",
+            "rm -rf node_modules/ package-lock.lock",
             "npm install",
             "npm run build"
         ],
         "setup-backend-local": [
-            "rm -rfv vendor/ composer.lock",
+            "rm -rf vendor/ composer.lock",
             "php -r \"echo '\\033[32m>>> Using COMPOSER='.(getenv('COMPOSER') ?: 'composer.json').'\\033[0m'.PHP_EOL;\"",
             "php -r \"putenv('COMPOSER=composer.json'); passthru('composer install');\"",
+            "@dump",
             "@optimize",
-            "@migrate",
-            "@ide-helper",
             "@phpstan"
         ],
         "dump":[
@@ -36,13 +35,13 @@
         ],
         "wipe-db": [
             "redis-cli FLUSHALL",
-            "@php artisan optimize:clear --ansi",
+            "@dump",
             "@php artisan db:wipe",
             "@php artisan migrate --seed --force"
         ],
         "migrate": [
             "redis-cli FLUSHALL",
-            "@php artisan optimize:clear --ansi",
+            "@dump",
             "@php artisan migrate --force"
         ],
         "phpstan": [
@@ -57,6 +56,10 @@
         "ide-helper": [
             "@php artisan ide-helper:generate",
             "@php artisan ide-helper:models"
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php artisan migrate --graceful --ansi"
         ]
     },
     "autoload": {
