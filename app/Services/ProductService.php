@@ -14,7 +14,8 @@ use MkamelMasoud\StarterCoreKit\Core\BaseService;
 /**
  * @extends BaseService<
  *     ProductRepositoryContract,
- *     ProductDto
+ *     ProductDto,
+ *     Product
  * >
  *
  * @property ProductRepositoryEloquent $repository
