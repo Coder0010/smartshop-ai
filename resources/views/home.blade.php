@@ -27,7 +27,7 @@
                 <div class="bg-white p-4 rounded shadow">
                     <h2 class="font-semibold mb-3">Recommended for you</h2>
                     @forelse($recommendations as $recommendedProduct)
-                        <x-guest.products.recommanded-product :product="$recommendedProduct"/>
+                        <x-guest.products.recommanded.home-page :product="$recommendedProduct"/>
                     @empty
                         <h3 class="text-center">No products found</h3>
                     @endforelse

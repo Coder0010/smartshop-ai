@@ -122,5 +122,6 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    'recommendation_limit' => env('REUSLT_RECOMMENDATION_LIMIT', 3),
 
 ];
