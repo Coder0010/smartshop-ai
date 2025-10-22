@@ -10,7 +10,8 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "mkamelmasoud/starter-core-kit": "^1.1.0",
-        "predis/predis": "^3.0"
+        "predis/predis": "^3.0",
+        "tucker-eric/eloquentfilter": "^3.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",

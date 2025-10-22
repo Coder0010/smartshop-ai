@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'Pa$$w0rd!',
         ]);
 
-        Product::factory(30)->create()->each(function ($product, $index) {
+        Product::factory(300)->create()->each(function ($product, $index) {
             $product->name = 'Product-' . ($index + 1);
             $product->save();
         });

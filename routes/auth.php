@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -38,7 +37,4 @@ Route::middleware('auth')->group(function () {
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
-
-    Route::get('/dashboard', fn () => redirect()->route('admin.products.index'))->name('dashboard');
-    Route::resource('products', AdminProductController::class)->names('admin.products');
 });

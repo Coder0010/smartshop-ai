@@ -1,0 +1,16 @@
+λ set COMPOSER=composer.local.json && composer run phpstan
+> ./vendor/bin/pint
+
+  ....................................................................
+
+  ─────────────────────────────────────────────────────────────────────────── Laravel
+    PASS   ................................................................. 68 files
+
+> ./vendor/bin/phpstan clear-result-cache
+Note: Using configuration file D:\laragon\www\smartshop-ai\phpstan.neon.dist.
+Result cache cleared from directory:
+C:\Users\kamel\AppData\Local\Temp/phpstan
+> ./vendor/bin/phpstan
+Note: Using configuration file D:\laragon\www\smartshop-ai\phpstan.neon.dist.
+ 42/42 [============================] 100%
+ [OK] No errors

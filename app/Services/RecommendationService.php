@@ -4,12 +4,13 @@ namespace App\Services;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
+use MkamelMasoud\StarterCoreKit\Traits\Support\SupportCacheTrait;
 
 class RecommendationService
 {
+    use SupportCacheTrait;
+
     public function __construct(
-        protected AiClientService $ai,
         protected ProductService $productService
     ) {}
 
@@ -28,21 +29,19 @@ class RecommendationService
             return $this->productService->inRandomOrder($limit);
         }
 
-        $cacheKey = 'ai_recommend:' . implode('-', $lastViewedIds);
-        $ttl      = now()->addMinutes(10);
-
-        return Cache::remember($cacheKey, $ttl, function () use ($lastViewedIds, $limit) {
+        $cacheKey = 'ai-recommend:' . implode('-', $lastViewedIds);
+        $callable = function () use ($lastViewedIds, $limit) {
             $products = $this->productService->findMany($lastViewedIds);
-
-            $names  = $products->pluck('name')->implode(', ');
-            $prompt = <<<PROMPT
-User recently viewed these products: {$names}.
-Suggest {$limit} similar product names from our catalog.
-Return only the names, separated by commas.
-PROMPT;
-
-            $response = $this->ai->getRecommendations($prompt);
-
+            $names    = $products->pluck('name')->implode(', ');
+            $response = app('ai-client')->ask(
+                prompt: $this->getPromptMessage(
+                    search: $names,
+                    limit: $limit
+                ),
+                options: [
+                    'system_prompt' => 'You are a helpful e-commerce recommender assistant.',
+                ]
+            );
             if (is_string($response) && $response !== '') {
                 $names = collect(explode(',', $response))
                     ->map(fn ($n) => trim($n))
@@ -50,7 +49,11 @@ PROMPT;
                     ->take($limit);
 
                 if ($names->isNotEmpty()) {
-                    $matched = $this->productService->search($names->toArray());
+                    $matched = $this->productService->search(
+                        filters: [
+                            'name' => $names->toArray(),
+                        ]
+                    );
                     if ($matched->isNotEmpty()) {
                         return $matched;
                     }
@@ -58,6 +61,21 @@ PROMPT;
             }
 
             return $this->productService->inRandomOrder($limit);
-        });
+        };
+
+        return $this->cacheRemember(
+            table: 'products',
+            cacheKey: $cacheKey,
+            callBack: $callable
+        );
+    }
+
+    private function getPromptMessage(string $search, int $limit = 3): string
+    {
+        return <<<PROMPT
+User recently viewed these products: {$search}.
+Suggest {$limit} similar product names from our catalog.
+Return only the names, separated by commas.
+PROMPT;
     }
 }

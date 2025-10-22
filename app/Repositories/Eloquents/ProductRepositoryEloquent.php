@@ -4,7 +4,7 @@ namespace App\Repositories\Eloquents;
 
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryContract;
-use MkamelMasoud\StarterCoreKit\Repositories\BaseEloquentRepository;
+use MkamelMasoud\StarterCoreKit\Core\Repositories\BaseEloquentRepository;
 
 /**
  * @extends BaseEloquentRepository<Product>

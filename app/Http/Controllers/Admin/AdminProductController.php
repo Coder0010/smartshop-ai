@@ -18,8 +18,14 @@ class AdminProductController extends Controller
 
     public function index(Request $request): View
     {
-        $perPage = $request->input('per_page', $this->service->getPerPage());
-        $data    = $this->service->allFromCache()->paginateOnCollection($perPage);
+        $data = $this->service
+            ->fetchData(
+                cachePrefix: 'admin'
+            )
+            ->paginateOnCollection(
+                perPage: $this->service->getRecordsLimit(),
+                page: $request->query('page', 1)
+            );
 
         return view('admin.products.index', compact('data'));
     }
@@ -57,7 +63,7 @@ class AdminProductController extends Controller
 
     public function destroy(int $id): RedirectResponse
     {
-        $deleted = $this->service->forceDelete($id);
+        $deleted = $this->service->delete($id, 'force');
 
         return redirect()
             ->back()

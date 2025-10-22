@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
-use MkamelMasoud\StarterCoreKit\Rules\NoHtmlRule;
+use MkamelMasoud\StarterCoreKit\Rules\Validation\NoHtmlRule;
 
 class AdminProductRequest extends FormRequest
 {

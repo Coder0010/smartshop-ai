@@ -4,7 +4,12 @@
     "license": "MIT",
     "type": "project",
     "scripts": {
+        "clear-cache-composer-npm" : [
+            "composer clear-cache",
+            "npm cache clean --force"
+        ],
         "setup-local-env": [
+            "@clear-cache-composer-npm",
             "@setup-frontend-local",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
@@ -28,7 +33,8 @@
             "@phpstan"
         ],
         "dump":[
-            "composer dump-autoload --optimize --classmap-authoritative"
+            "composer dump-autoload -o",
+            "@optimize"
         ],
         "optimize": [
             "@php artisan optimize:clear --ansi"
@@ -46,8 +52,8 @@
         ],
         "phpstan": [
             "./vendor/bin/pint",
-            "./vendor/bin/phpstan clear-result-cache",
-            "./vendor/bin/phpstan"
+            "./vendor/bin/phpstan clear-result-cache --configuration=phpstan.neon.dist",
+            "./vendor/bin/phpstan --configuration=phpstan.neon.dist --memory-limit=2G"
         ],
         "phpstan-analyse": [
             "./vendor/bin/pint --test",

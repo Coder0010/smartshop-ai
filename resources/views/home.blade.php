@@ -2,7 +2,8 @@
     <div class="container mx-auto py-8 px-4">
         <section class="mb-6 bg-white p-5 rounded shadow">
             <form action="{{ route('home') }}" method="GET" class="flex gap-2">
-                <input name="q" value="{{ $searchQuery ?? '' }}" type="text" placeholder="Search products..." class="flex-1 border rounded p-2" />
+                <input name="name" value="{{ request('name') }}" type="text" placeholder="Search products..." class="flex-1 border rounded p-2" />
+                <input name="price" value="{{ request('price') }}" type="number" placeholder="Search products number" class="flex-1 border rounded p-2" />
                 <button class="px-4 py-2 bg-blue-600 text-white rounded">Search</button>
             </form>
         </section>
