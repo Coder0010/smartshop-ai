@@ -2,12 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use MkamelMasoud\StarterCoreKit\Core\BaseEntity;
 
 /**
+ * @property int $id
+ * @property string $slug
+ * @property string|null $name_en
+ * @property string|null $name_ar
+ * @property string|null $description_en
+ * @property string|null $description_ar
  * @property string|null $image
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ *
+ * @mixin \Eloquent
  */
 class Product extends BaseEntity
 {

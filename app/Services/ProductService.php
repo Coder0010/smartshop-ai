@@ -46,7 +46,7 @@ class ProductService extends BaseService
         return $dto;
     }
 
-    protected function beforeDelete(Model $model): void
+    protected function beforeDeleteAction(Model $model): void
     {
         /** @var Product $model */
         $path = $model->getRawOriginal('image');

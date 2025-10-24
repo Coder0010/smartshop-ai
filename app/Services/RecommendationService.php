@@ -49,10 +49,11 @@ class RecommendationService
                     ->take($limit);
 
                 if ($names->isNotEmpty()) {
-                    $matched = $this->productService->search(
+                    $matched = $this->productService->fetchData(
                         filters: [
                             'name' => $names->toArray(),
-                        ]
+                        ],
+                        cachePrefix: 'search'
                     );
                     if ($matched->isNotEmpty()) {
                         return $matched;

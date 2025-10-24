@@ -8,6 +8,9 @@
             "composer clear-cache",
             "npm cache clean --force"
         ],
+        "flush-redis" : [
+            "redis-cli -n 1 FLUSHDB"
+        ],
         "setup-local-env": [
             "@clear-cache-composer-npm",
             "@setup-frontend-local",
@@ -66,7 +69,8 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
             "@php artisan migrate --graceful --ansi"
-        ]
+        ],
+        "php-test": "pest"
     },
     "autoload": {
         "psr-4": {
